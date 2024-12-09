@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Guess the Number</title>
+</head>
+<body>
+  <input id="guess" type="number">
+  <button onclick="submitGuess()">Submit Guess</button>
+  <p id="result"></p>
+  <script>
+    function submitGuess() {
+      const guess = document.getElementById('guess').value;
+      fetch('http://127.0.0.1:5000/guess', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ guess })
+      })
+      .then(response => response.json())
+      .then(data => document.getElementById('result').innerText = data.result);
+    }
+  </script>
+</body>
+</html>
