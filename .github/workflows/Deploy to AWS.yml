@@ -1,4 +1,35 @@
+name: Deploy to AWS
+
 on:
   push:
     branches:
       - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Deploy to EC2
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.AWS_EC2_HOST }}
+          username: ${{ secrets.AWS_EC2_USERNAME }}
+          key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          source: "."
+          target: "/home/ubuntu/backend"
+
+      - name: Deploy to S3
+        uses: appleboy/scp-action@v1
+        with:
+          host: s3.amazonaws.com
+          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          source: "frontend"
+          target: "/myfrontendbucket9909"
