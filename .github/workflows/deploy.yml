@@ -1,4 +1,4 @@
-name: Deploy to AWS
+name: Deploy
 
 on:
   push:
@@ -12,20 +12,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy to EC2
-        uses: appleboy/scp-action@master
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-          host: ${{ secrets.AWS_EC2_HOST }}
-          username: ${{ secrets.AWS_EC2_USERNAME }}
-          key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          source: "."
-          target: "/home/ubuntu/backend"
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'us-east-1'
+
+      - name: Deploy to EC2
+        uses: appleboy/scp-action@v1
+        with:
+          host: '54.167.93.19'
+          username: 'ec2-user'
+          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          source: '.'
+          target: '/home/ec2-user'
 
       - name: Deploy to S3
-        uses: appleboy/scp-action@master
+        uses: aws-actions/s3-upload@v1
         with:
-          host: s3.amazonaws.com
-          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          source: "frontend"
-          target: "/myfrontendbucket9909"
+          aws-region: 'us-east-1'
+          bucket: 'myfrontendbucket9909'
+          source: 'frontend'
+          destination: '/'
