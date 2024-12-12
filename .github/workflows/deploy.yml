@@ -29,7 +29,7 @@ jobs:
           target: '/home/ec2-user'
 
       - name: Deploy to S3
-        uses: aws-actions/s3-upload@v3
+        uses: aws-actions/amazon-s3-upload@v1
         with:
           aws-region: 'us-east-1'
           bucket: 'myfrontendbucket9909'
