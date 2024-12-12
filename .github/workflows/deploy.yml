@@ -27,7 +27,8 @@ jobs:
           key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
           source: '.'
           target: '/home/ec2-user'
-
+          timeout: 300 
+          strict_host_key_checking: no
       - name: Deploy to S3
         run: |
           aws s3 sync frontend s3://myfrontendbucket9909/
