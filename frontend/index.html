@@ -11,7 +11,7 @@
     function submitGuess() {
       const guess = document.getElementById('guess').value;
       // fetch('http://127.0.0.1:5000/guess', { //Once deployed replace the IP
-      fetch('http://54.167.93.195:5000/guess', {  
+      fetch('http://54.224.102.241:5000/guess', {  
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ guess }),
@@ -22,3 +22,5 @@
   </script>
 </body>
 </html>
+
+
