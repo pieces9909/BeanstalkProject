@@ -4,8 +4,15 @@ import random
 
 app = Flask(__name__)
 CORS(app)
+
 secret_number = random.randint(1, 100)
 
+# Code to demo if backend is running
+@app.route('/')
+def home():
+    return "Backend is running!"
+
+# Routing code
 @app.route('/guess', methods=['POST'])
 def guess():
     data = request.json
@@ -16,5 +23,4 @@ def guess():
         return jsonify({'result': 'Too high!'})
     return jsonify({'result': 'You guessed it!'})
 
-if __name__ == '__main__':
-    app.run(debug=True)
+app.run(host='0.0.0.0', port=5000)
