@@ -1,4 +1,4 @@
-name: Deploy
+name: deploy
 
 on:
   push:
@@ -19,15 +19,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: 'us-east-1'
 
-      - name: Deploy to EC2
-        uses: appleboy/scp-action@master
-        with:
-          host: '54.167.93.19'
-          username: 'ec2-user'
-          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
-          source: '.'
-          target: '/home/ec2-user'
-          timeout: 300s 
       - name: Deploy to S3
-        run: |
-          aws s3 sync frontend s3://myfrontendbucket9909/
+        uses: aws-actions/s3@v1
+        with:
+          source: './'
+          destination: 'myfrontendbucket9909'
+          overwrite: true
+          args: --delete
