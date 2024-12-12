@@ -20,7 +20,7 @@ jobs:
           aws-region: 'us-east-1'
 
       - name: Deploy to EC2
-        uses: appleboy/scp-action@v1
+        uses: appleboy/scp-action@master
         with:
           host: '54.167.93.19'
           username: 'ec2-user'
@@ -29,7 +29,7 @@ jobs:
           target: '/home/ec2-user'
 
       - name: Deploy to S3
-        uses: aws-actions/s3-upload@v1
+        uses: aws-actions/s3-upload@v3
         with:
           aws-region: 'us-east-1'
           bucket: 'myfrontendbucket9909'
