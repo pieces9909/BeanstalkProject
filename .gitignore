@@ -1,1 +1,3 @@
 venv/
+myKeyPair.pem
+rootkey.csv
